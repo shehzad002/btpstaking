@@ -30,6 +30,7 @@ const Interface = () => {
     const [deadline,setDeadline] = useState(0);
     const [deadline2,setDeadline2] = useState(0);
     const [deadline3,setDeadline3] = useState(0);
+    const [allowance,setAllowance] = useState(0);
 
     const [pendingMessage,setPendingMessage] = useState('');
 
@@ -144,6 +145,11 @@ const Interface = () => {
            let dateEnd3 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit',hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(endTime3.end_time + "000")
        
            setDeadline3(dateEnd3);
+              
+           let stakingContract = '0x9D6d817ea5d4A69fF4C4509bea8F9b2534Cec108';   
+              
+           let _allowance = await AbiBusd.methods.allowance(current,stakingContract).call();
+            setAllowance(_allowance);  
 
           
     
@@ -293,7 +299,19 @@ const Interface = () => {
               onChange={(e) => setValue(e.target.value)}
               required/>
              <br />
-             <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button> <button className="btn btn-success btn-lg">Deposit</button>
+                  {allowance>0? 
+                   <>
+                   <button className="btn btn-success btn-lg">Deposit</button>
+                   </> 
+                   
+                   : 
+                   
+                   <>
+                    <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button> 
+                    </>
+
+                  }
+            
               </form>
              
              <br /><br /><h5  className="badge bg-success">6 Months ROI: 5%</h5>
@@ -327,7 +345,18 @@ const Interface = () => {
               onChange={(e) => setValue2(e.target.value)}
              />
              <br />
-             <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button>  <button className="btn btn-success btn-lg">Deposit</button>
+              {allowance>0? 
+                   <>
+                   <button className="btn btn-success btn-lg">Deposit</button>
+                   </> 
+                   
+                   : 
+                   
+                   <>
+                    <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button> 
+                    </>
+
+                  }
              </form>
            <br /><br /><h5 className="badge bg-success">9 Months ROI: 10%</h5>
           
@@ -362,7 +391,18 @@ const Interface = () => {
               onChange={(e) => setValue3(e.target.value)}
              />
              <br />
-             <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button>  <button className="btn btn-success btn-lg">Deposit</button>
+             {allowance>0? 
+                   <>
+                   <button className="btn btn-success btn-lg">Deposit</button>
+                   </> 
+                   
+                   : 
+                   
+                   <>
+                    <button className="btn btn-warning btn-lg" onClick={approval}>Approve</button> 
+                    </>
+
+                  }
               </form>
              <br /><br /><h5 className="badge bg-success">12 Months ROI: 20%</h5>
              <br />
