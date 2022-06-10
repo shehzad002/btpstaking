@@ -50,7 +50,6 @@ const Interface = () => {
     window.location.reload();
   };
   const loadWeb3Modal = useCallback(async () => {
-    alert("Load");
     const provider = await web3Modal.connect();
 
     setInjectedProvider(new Web3(provider));
