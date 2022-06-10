@@ -272,6 +272,7 @@ const Interface = () => {
          <br />
         <center>    <button className="btn btn-danger btn-lg btnd" onClick={loadWeb3Modal} style={{background:"#f68f19",border:"none"}}><span className="fas fa-wallet"></span> {connButtonText}</button>
         </center>
+<center><h3 style={{color:"#fff"}}>{pendingMessage}</h3></center>
       <center>  <br /><h1 style={{color:"#fff"}}>BTP STAKING</h1></center>
         <br /><br />
          <div className="container">
@@ -282,7 +283,7 @@ const Interface = () => {
               6 Months Plan
             </div>
             <div className="card-body">
-              {pendingMessage}
+             
              <form onSubmit={deposit}> 
              <input 
               type="number"
@@ -317,7 +318,7 @@ const Interface = () => {
               9 Months Plan
             </div>
             <div className="card-body">
-            {pendingMessage}
+        
              <form onSubmit={deposit2}> <input 
               type="number"
               placeholder="0.2 BTP"
@@ -351,7 +352,7 @@ const Interface = () => {
               12 Months Plan
             </div>
             <div className="card-body">
-            {pendingMessage}
+      
              <form onSubmit={deposit3}> 
              <input 
               type="number"
