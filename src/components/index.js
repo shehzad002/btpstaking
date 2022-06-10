@@ -149,6 +149,7 @@ const Interface = () => {
            let stakingContract = '0x9D6d817ea5d4A69fF4C4509bea8F9b2534Cec108';   
               
            let _allowance = await AbiBusd.methods.allowance(current,stakingContract).call();
+              console.log("this is console",_allowance);
             setAllowance(_allowance);  
 
           
