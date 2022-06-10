@@ -36,74 +36,80 @@ const Interface = () => {
  
 
     const logoutOfWeb3Modal = async () => {
-        await web3Modal.clearCachedProvider();
-        if (
-          injectedProvider &&
-          injectedProvider.provider &&
-          typeof injectedProvider.provider.disconnect == "function"
-        ) {
-          await injectedProvider.provider.disconnect();
-        }
-        setIsConnected(false);
-    
-        window.location.reload();
-      };
-      const loadWeb3Modal = useCallback(async () => {
-        const provider = await web3Modal.connect();
-        setInjectedProvider(new Web3(provider));
-        const acc = provider.selectedAddress
-          ? provider.selectedAddress
-          : provider.accounts[0];
-        const short = shortenAddr(acc);
-    
-        setWeb3(new Web3(provider));
-        setAbi(await getAbi(new Web3(provider)));
-        setAbiBusd(await getAbiBusd(new Web3(provider)));
-        setAccounts([acc]);
-        setCurrent(acc);
-        //     setShorttened(short);
-        setIsConnected(true);
-        setConnButtonText(short);
-    
-        provider.on("chainChanged", (chainId) => {
-          console.log(`chain changed to ${chainId}! updating providers`);
-          setInjectedProvider(new Web3(provider));
-        });
-    
-        provider.on("accountsChanged", () => {
-          console.log(`account changed!`);
-          setInjectedProvider(new Web3(provider));
-        });
-    
-        // Subscribe to session disconnection
-        provider.on("disconnect", (code, reason) => {
-          console.log(code, reason);
-          logoutOfWeb3Modal();
-        });
-        // eslint-disable-next-line
-      }, [setInjectedProvider]);
-    
-      useEffect(() => {
-        setInterval(() => {
-          setRefetch((prevRefetch) => {
-            return !prevRefetch;
-          });
-        }, 10000);
-      }, []);
-    
-      useEffect(() => {
-        if (web3Modal.cachedProvider) {
-          loadWeb3Modal();
-        }
-        // eslint-disable-next-line
-      }, []);
+    await web3Modal.clearCachedProvider();
+    if (
+      injectedProvider &&
+      injectedProvider.provider &&
+      typeof injectedProvider.provider.disconnect == "function"
+    ) {
+      await injectedProvider.provider.disconnect();
+    }
+    setIsConnected(false);
 
-      const shortenAddr = (addr) => {
-        if (!addr) return "";
-        const first = addr.substr(0, 3);
-        const last = addr.substr(38, 41);
-        return first + "..." + last;
-      };
+    window.location.reload();
+  };
+  const loadWeb3Modal = useCallback(async () => {
+    alert("Load");
+    const provider = await web3Modal.connect();
+
+    setInjectedProvider(new Web3(provider));
+    let acc;
+    if (provider.isTrust) {
+      acc = provider.address;
+    } else if (provider.isMetaMask) {
+      acc = provider.selectedAddress;
+    } else {
+      acc = provider.accounts[0];
+    }
+    const short = shortenAddr(acc);
+
+    setWeb3(new Web3(provider));
+    setAbi(await getAbi(new Web3(provider)));
+    setAccounts([acc]);
+    setCurrent(acc);
+    //     setShorttened(short);
+    setIsConnected(true);
+    setConnButtonText(short);
+
+    provider.on("chainChanged", (chainId) => {
+      console.log(`chain changed to ${chainId}! updating providers`);
+      setInjectedProvider(new Web3(provider));
+    });
+
+    provider.on("accountsChanged", () => {
+      console.log(`account changed!`);
+      setInjectedProvider(new Web3(provider));
+    });
+
+    // Subscribe to session disconnection
+    provider.on("disconnect", (code, reason) => {
+      console.log(code, reason);
+      logoutOfWeb3Modal();
+    });
+    // eslint-disable-next-line
+  }, [setInjectedProvider]);
+
+  useEffect(() => {
+    setInterval(() => {
+      setRefetch((prevRefetch) => {
+        return !prevRefetch;
+      });
+    }, 10000);
+  }, []);
+
+  useEffect(() => {
+    if (web3Modal.cachedProvider) {
+      loadWeb3Modal();
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  const shortenAddr = (addr) => {
+    if (!addr) return "";
+    const first = addr.substr(0, 3);
+    const last = addr.substr(38, 41);
+    return first + "..." + last;
+  };
     
     
 
