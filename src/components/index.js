@@ -65,6 +65,7 @@ const Interface = () => {
 
     setWeb3(new Web3(provider));
     setAbi(await getAbi(new Web3(provider)));
+    setAbiBusd(await getAbiBusd(new Web3(provider)));  
     setAccounts([acc]);
     setCurrent(acc);
     //     setShorttened(short);
