@@ -146,11 +146,7 @@ const Interface = () => {
        
            setDeadline3(dateEnd3);
               
-           let stakingContract = '0x9D6d817ea5d4A69fF4C4509bea8F9b2534Cec108';   
-              
-           let _allowance = await AbiBusd.methods.allowance(current,stakingContract).call();
-              console.log("this is console",_allowance);
-            setAllowance(_allowance);  
+          
 
           
     
@@ -160,6 +156,19 @@ const Interface = () => {
     
         Contract();
         // eslint-disable-next-line
+      }, [refetch]);
+
+
+      useEffect(() => {
+        const approvalNotifcation = async () => {
+          if (isConnected && Abi) {
+          let stakingContract = '0x9D6d817ea5d4A69fF4C4509bea8F9b2534Cec108';   
+          let _allowance = await AbiBusd.methods.allowance(current,stakingContract).call();
+             console.log("this is console",_allowance);
+           setAllowance(_allowance);  
+          }
+        }
+        approvalNotifcation();
       }, [refetch]);
 
 
