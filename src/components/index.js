@@ -132,31 +132,33 @@ const Interface = () => {
            let _reward3 = await Abi.methods.Reward(current,3).call();
            setReward3(_reward3/10e17);
 
-           let endTime = await Abi.methods.sixMonth(current).call();
-           let dateEnd = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(endTime.end_time + "000")
-       
-           setDeadline(dateEnd);
-
-           let endTime2 = await Abi.methods.nineMonth(current).call();
-           let dateEnd2 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' ,hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(endTime2.end_time + "000")
-           setDeadline2(dateEnd2);
-
-           let endTime3 = await Abi.methods.twelveMonth(current).call();
-           let dateEnd3 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit',hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(endTime3.end_time + "000")
-       
-           setDeadline3(dateEnd3);
-              
-          
-
-          
-    
-
           }
         };
     
         Contract();
         // eslint-disable-next-line
       }, [refetch]);
+
+      useEffect(() => {
+        const TimeLine = async () => {
+          if (isConnected && Abi) {
+            let endTime = await Abi.methods.sixMonth(current).call();
+            let dateEnd = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(endTime.end_time + "000")
+            console.log("This is time",endTime);
+            setDeadline(dateEnd);
+ 
+            let endTime2 = await Abi.methods.nineMonth(current).call();
+            let dateEnd2 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' ,hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(endTime2.end_time + "000")
+            setDeadline2(dateEnd2);
+ 
+            let endTime3 = await Abi.methods.twelveMonth(current).call();
+            let dateEnd3 = new Intl.DateTimeFormat('en-US', { year: 'numeric', month: '2-digit', day: '2-digit',hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(endTime3.end_time + "000")
+        
+            setDeadline3(dateEnd3);
+          }
+        }
+        TimeLine();
+      },[refetch]);
 
 
       useEffect(() => {
