@@ -36,7 +36,7 @@ const Interface = () => {
 
  
 
-    const logoutOfWeb3Modal = async () => {
+  const logoutOfWeb3Modal = async () => {
     await web3Modal.clearCachedProvider();
     if (
       injectedProvider &&
@@ -49,27 +49,29 @@ const Interface = () => {
 
     window.location.reload();
   };
+
+
+
   const loadWeb3Modal = useCallback(async () => {
     const provider = await web3Modal.connect();
-
     setInjectedProvider(new Web3(provider));
-    let acc;
-    if (provider.isTrust) {
-      acc = provider.address;
-    } else if (provider.isMetaMask) {
-      acc = provider.selectedAddress;
-    } else {
-      acc = provider.accounts[0];
-    }
+    const acc = provider.selectedAddress
+      ? provider.selectedAddress
+      : provider.accounts[0];
+
+    
     const short = shortenAddr(acc);
 
     setWeb3(new Web3(provider));
     setAbi(await getAbi(new Web3(provider)));
-    setAbiBusd(await getAbiBusd(new Web3(provider)));  
+ 
+    setAbiBusd(await getAbiBusd(new Web3(provider)));
+
     setAccounts([acc]);
     setCurrent(acc);
     //     setShorttened(short);
     setIsConnected(true);
+    
     setConnButtonText(short);
 
     provider.on("chainChanged", (chainId) => {
@@ -111,10 +113,6 @@ const Interface = () => {
     const last = addr.substr(38, 41);
     return first + "..." + last;
   };
-    
-    
-
-     
 
 
    
